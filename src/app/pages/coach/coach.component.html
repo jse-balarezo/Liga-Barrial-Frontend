@@ -1,0 +1,105 @@
+<body>
+    <div class="nav">
+        <div>Liga Barrial</div>
+        <a pButton type="button" label="Cerrar Sesion" id="button1"  href="http://localhost:4200/pages/login"></a>
+        <a pButton type="button" label="Menú" id="button2" href="http://localhost:4200/pages/menu-presidente"></a>
+      </div>
+    <div id="titulo">
+        <h1>
+            {{title}}
+        </h1>
+    </div>
+
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="p-fluid">
+        <div id="formulario">
+            <div class="field">
+                <label for="team">Team</label>
+                <p-dropdown [options]="teams" formControlName="team" optionLabel="name"></p-dropdown>
+            </div>
+            <br>
+
+            <div class="field">
+                <label for="id">Id</label>
+                <input pInputText id="id" type="text" formControlName='id'>
+                <p-message *ngIf="idField.errors?.['required']" severity="error"
+                    text="Este campo es Obligatorio"></p-message>
+            </div>
+            <br>
+
+            <div class="field">
+                <label for="age">Edad</label>
+                <input pInputText id="age" type="text" formControlName='age'>
+                <p-message *ngIf="ageField.errors?.['required']" severity="error"
+                    text="Este campo es Obligatorio"></p-message>
+                <p-message *ngIf="ageField.errors?.['min']" severity="error" text="Minimo 20 Años"></p-message>
+                <i *ngIf="ageField.valid" class="pi pi-check"></i>
+            </div>
+            <br>
+
+            <div class="field">
+                <label for="name">Nombre</label>
+                <input pInputText id="name" type="text" formControlName='name'>
+                <p-message *ngIf="nameField.errors?.['required']" severity="error"
+                    text="Este campo es Obligatorio"></p-message>
+                <p-message *ngIf="nameField.errors?.['minLength']" severity="error"
+                    text="Minimo 4 Caracteres"></p-message>
+                <i *ngIf="nameField.valid" class="pi pi-check"></i>
+            </div>
+            <br>
+
+            <div class="field">
+                <label for="nickname">Apodo</label>
+                <input pInputText id="nickname" type="text" formControlName='nickname'>
+                <p-message *ngIf="nicknameField.errors?.['minlength']" severity="error"
+                    text="Minimo 4 Caracteres"></p-message>
+                <p-message *ngIf="nicknameField.errors?.['maxlength']" severity="error"
+                    text="Maximo 15 Caracteres"></p-message>
+            </div>
+            <br>
+
+            <div class="field">
+                <label for="salary">Salario</label>
+                <input pInputText id="salary" type="text" formControlName='salary'>
+                <p-message *ngIf="salaryField.errors?.['min']" severity="error" text="Minimo $10"></p-message>
+                <p-message *ngIf="salaryField.errors?.['max']" severity="error" text="Minimo $10000000000"></p-message>
+            </div>
+            <br>
+
+            <div class="col-12 md:col-4">
+                <i class="pi"></i>
+                <label for="state">Estado del Entrenador</label>
+                <p-message severity="info"
+                    text="Activar = Entrenador Activo, Desactivar = Entrenador Inactivo"></p-message>
+                <div class="p-inputgroup">
+                    <p-inputSwitch id="state" formControlName="state"></p-inputSwitch>
+                </div>
+                <p-message severity="error" text="Este campo es obligatorio"
+                    *ngIf="stateField.errors?.['required']"></p-message>
+            </div>
+            <hr>
+            <button pButton type="submit" label="Enviar"></button>
+        </div>
+    </form>
+
+    <table border="1">
+        <tr>
+            <th>id</th>
+            <th>nombre</th>
+            <th>Team</th>
+            <th>Opciones</th>
+        </tr>
+        <tbody>
+            <tr *ngFor="let coach of coaches">
+                <th>{{coach.id}}</th>
+                <th>{{coach.team?.name}}</th>
+                <th>{{coach.name}}</th>
+                <th>
+                    <button type="button" pButton (click)="show(coach.id!)" label="Ver" icon="pi pi-eye"
+                        class="mr-2" id="boton1"></button>
+                    <button type="button" pButton (click)="destroy(coach.id!)" class="p-button-danger"
+                        icon="pi pi-trash" id="boton2"></button>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+</body>

@@ -1,0 +1,101 @@
+<body>
+  <div class="nav">
+    <div>Liga Barrial</div>
+    <a pButton type="button" label="Cerrar Sesion" id="button1"  href="http://localhost:4200/pages/login"></a>
+        <a pButton type="button" label="Menú" id="button2" href="http://localhost:4200/pages/menu-presidente"></a>
+  </div>
+
+  <div id="titulo">
+    <h1>
+      {{title}}
+    </h1>
+  </div>
+
+  <form [formGroup]="myForm" (ngSubmit)="onSubmit()" class="p-fluid">
+    <div id="formulario">
+    <div class="field">
+      <label for="id">Id</label>
+      <input pInputText id="id" type="text" formControlName='id'>
+      <p-message *ngIf="idField.errors?.['required']" severity="error" text="Este campo es Obligatorio"></p-message>
+    </div>
+    <br>
+
+    <div class="field">
+      <label for="date">Fecha</label>
+      <p-message severity="info" text="formato año/mes/dia"></p-message>
+      <input pInputText id="date" type="text" formControlName='date'>
+      <p-message *ngIf="dateField.errors?.['required']" severity="error" text="Este campo es Obligatorio"></p-message>
+    </div>
+    <br>
+
+    <div class="field">
+      <label for="loser">Perdedor</label>
+      <input pInputText id="loser" type="text" formControlName='loser'>
+      <p-message *ngIf="loserField.errors?.['required']" severity="error" text="Este campo es Obligatorio"></p-message>
+      <p-message *ngIf="loserField.errors?.['maxlength']" severity="error" text="Maximo 15 Caracteres"></p-message>
+    </div>
+    <br>
+
+    <div class="field">
+      <label for="numberMatches">Numero de Partidos</label>
+      <input pInputText id="numberMatches" type="text" formControlName='numberMatches'>
+      <p-message *ngIf="numberMatchesField.errors?.['required']" severity="error"
+        text="Este campo es Obligatorio"></p-message>
+      <p-message *ngIf="numberMatchesField.errors?.['min']" severity="error" text="Minimo 1 partido"></p-message>
+    </div>
+    <br>
+
+    <div class="col-12 md:col-4">
+      <i class="pi"></i>
+      <label for="penalties">Penales</label>
+      <p-message severity="info" text="Activar = Si Hubo Penales, Desactivar = No Hubo Penales"></p-message>
+      <div class="p-inputgroup">
+        <p-inputSwitch id="penalties" formControlName="penalties"></p-inputSwitch>
+      </div>
+      <p-message severity="error" text="Este campo es obligatorio"
+        *ngIf="penaltiesField.errors?.['required']"></p-message>
+    </div>
+    <br>
+
+    <div class="field">
+      <label for="winner">Ganador</label>
+      <input pInputText id="winner" type="text" formControlName='winner'>
+      <p-message *ngIf="winnerField.errors?.['minlength']" severity="error" text="Minimo 4 Caracteres"></p-message>
+      <p-message *ngIf="winnerField.errors?.['maxlength']" severity="error" text="Maximo 15 Caracteres"></p-message>
+    </div>
+    <br>
+
+    <div class="col-12 md:col-4">
+      <i class="pi"></i>
+      <label for="tied">Empate</label>
+      <p-message severity="info" text="Activar = Si Hubo Empate, Desactivar = No Hubo Empate"></p-message>
+      <div class="p-inputgroup">
+        <p-inputSwitch id="tied" formControlName="tied"></p-inputSwitch>
+      </div>
+      <p-message severity="error" text="Este campo es obligatorio" *ngIf="tiedField.errors?.['required']"></p-message>
+    </div>
+    <hr>
+    <button pButton type="submit" label="Enviar"></button>
+    </div>
+  </form>
+
+  <table border="1">
+    <tr>
+      <th>id</th>
+      <th>nombre</th>
+      <th>Opciones</th>
+    </tr>
+    <tbody>
+      <tr *ngFor="let footballGame of footballGames">
+        <th>{{footballGame.id}}</th>
+        <th>{{footballGame.date}}</th>
+        <th>
+          <button type="button" pButton (click)="show(footballGame.id!)" label="Ver" icon="pi pi-eye"
+            class="mr-2"></button>
+          <button type="button" pButton (click)="destroy(footballGame.id!)" class="p-button-danger"
+            icon="pi pi-trash"></button>
+        </th>
+      </tr>
+    </tbody>
+  </table>
+</body>
